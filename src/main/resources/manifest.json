@@ -1,0 +1,21 @@
+{
+    "Group": "HyperCommand",
+    "Name": "HyperCommand Library",
+    "Version": "0.0.1",
+    "Description": "-",
+    "Authors": [
+        {
+            "Name": "dani33y"
+        }
+    ],
+    "ServerVersion": "*",
+    "Dependencies": {
+        
+    },
+    "OptionalDependencies": {
+        
+    },
+    "DisabledByDefault": false,
+    "Main": "d.studio.hypercommand.HyperCommand",
+    "IncludesAssetPack": true
+}
