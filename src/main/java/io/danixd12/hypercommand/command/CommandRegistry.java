@@ -36,20 +36,19 @@ public class CommandRegistry {
     public static void registerCommand(Class<?> commandClass){
 
         if (!commandClass.isAnnotationPresent(Command.class))
-            throw new RuntimeException("Class is not a command");
+            throw new RuntimeException("Class provided is not a command class!");
 
         Command c = commandClass.getAnnotation(Command.class);
 
         CommandDescriptor cmdDescriptor;
 
-        Object clazz;
         try {
-            clazz = commandClass.getDeclaredConstructor().newInstance();
+            commandClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
 
-        cmdDescriptor = new CommandDescriptor(c.name(), c.description(), c.aliases(), c.permissions(), c.requiresConfirmation(), clazz);
+        cmdDescriptor = new CommandDescriptor(c.name(), c.description(), c.aliases(), c.permissions(), c.requiresConfirmation());
 
         for (Method method : commandClass.getDeclaredMethods()) {
 

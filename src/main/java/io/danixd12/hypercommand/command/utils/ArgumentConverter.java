@@ -19,8 +19,8 @@
 package io.danixd12.hypercommand.command.utils;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import io.danixd12.hypercommand.command.core.CommandArgumentParser;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
@@ -29,7 +29,7 @@ public abstract class ArgumentConverter {
 
     private ArgumentConverter() {}
 
-    public static Object[] parseParameters(Method method, CommandContext ctx, List<?> args) {
+    public static Object[] parseParameters(Method method, CommandContext ctx, List<CommandArgumentParser> args) {
 
         Parameter[] methodParams = method.getParameters();
         Object[] result = new Object[method.getParameters().length];
@@ -42,18 +42,11 @@ public abstract class ArgumentConverter {
 
             if (i < args.size()) {
 
-                Object argHolder = args.get(i);
+                CommandArgumentParser argHolder = args.get(i);
 
-                try {
+                Object rawValue = argHolder.getRawValue(ctx);
 
-                    Method getRawValueMethod = argHolder.getClass().getMethod("getRawValue", CommandContext.class);
-                    Object rawValue = getRawValueMethod.invoke(argHolder, ctx);
-
-                    result[i] = convertValue(rawValue, paramType);
-
-                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
+                result[i] = convertValue(rawValue, paramType);
 
             } else {
                 result[i] = getDefaultValue(paramType);
