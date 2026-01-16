@@ -31,7 +31,7 @@ import javax.annotation.Nonnull;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
-public abstract class AbstractCommandAdapter extends CommandBase {
+public sealed abstract class AbstractCommandAdapter extends CommandBase permits CommandAdapter, SubCommandAdapter {
 
     private final AbstractCommandDescriptor descriptor;
 

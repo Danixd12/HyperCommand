@@ -18,7 +18,7 @@
 
 package io.danixd12.hypercommand.exceptions;
 
-public class CommandExecutionException extends RuntimeException {
+public final class CommandExecutionException extends RuntimeException {
 
     public CommandExecutionException(String cmdName, Throwable cause) {
         super("Error while executing command: " + cmdName + " -> " + cause);

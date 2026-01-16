@@ -18,10 +18,14 @@
 
 package io.danixd12.hypercommand.exceptions;
 
-public class CommandRegistrationException extends RuntimeException {
+public final class CommandRegistrationException extends RuntimeException {
 
     public CommandRegistrationException(String cmdName) {
         super("Couldn't register command: " + cmdName);
+    }
+
+    public CommandRegistrationException(String cmdName, String cause) {
+        super("Couldn't register command: " + cmdName + " -> " + cause);
     }
 
 }

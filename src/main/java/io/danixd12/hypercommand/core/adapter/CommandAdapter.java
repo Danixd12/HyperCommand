@@ -20,7 +20,7 @@ package io.danixd12.hypercommand.core.adapter;
 
 import io.danixd12.hypercommand.core.descriptor.CommandDescriptor;
 
-public class CommandAdapter extends AbstractCommandAdapter {
+public final class CommandAdapter extends AbstractCommandAdapter {
 
     public CommandAdapter(CommandDescriptor descriptor) {
 

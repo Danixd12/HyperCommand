@@ -28,14 +28,31 @@ import io.danixd12.hypercommand.utils.RegistryHelper;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
-public class CommandRegistry {
+public final class CommandRegistry {
 
-    private static JavaPlugin base;
+    public static void registerCommand(JavaPlugin plugin, Class<?> commandClass) {
 
-    public static void registerCommand(Class<?> commandClass){
+        CommandDescriptor descriptor = getCommandDescriptor(commandClass);
+
+        CommandAdapter commandAdapter = new CommandAdapter(descriptor);
+
+        plugin.getCommandRegistry().registerCommand(commandAdapter);
+
+        plugin.getLogger().at(Level.ALL).log("Registered command -> " + descriptor.getName());
+
+    }
+
+    public static void registerCommands(JavaPlugin plugin, Class<?>... commandClasses) {
+
+        for (Class<?> commandClass : commandClasses)
+            registerCommand(plugin, commandClass);
+
+    }
+
+    private static CommandDescriptor getCommandDescriptor(Class<?> commandClass){
 
         if (!commandClass.isAnnotationPresent(Command.class))
-            throw new RuntimeException("Class provided is not a command class!");
+            throw new CommandRegistrationException("", "Class provided is not a command class!");
 
         Command parentCommand = commandClass.getAnnotation(Command.class);
 
@@ -54,28 +71,7 @@ public class CommandRegistry {
         else
             throw new CommandRegistrationException(parentCommand.name());
 
-        registerCommandInternal(parentDescriptor);
-
-    }
-
-    private static void registerCommandInternal(CommandDescriptor desc) {
-
-        CommandAdapter commandAdapter = new CommandAdapter(desc);
-
-        base.getCommandRegistry().registerCommand(commandAdapter);
-
-        base.getLogger().at(Level.ALL).log("Registered command -> " + desc.getName());
-
-    }
-
-    public static void setBasePlugin(JavaPlugin plugin) {
-
-        if (base != null)
-            throw new RuntimeException("Base plugin already initialized!");
-
-        base = plugin;
-
-        base.getLogger().at(Level.ALL).log("HyperCommand library has been successfully initialized.");
+        return parentDescriptor;
 
     }
 

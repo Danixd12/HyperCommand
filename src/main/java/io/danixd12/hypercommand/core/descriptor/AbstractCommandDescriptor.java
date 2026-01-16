@@ -29,7 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public abstract class AbstractCommandDescriptor extends CommandMeta {
+public sealed abstract class AbstractCommandDescriptor extends CommandMeta permits CommandDescriptor, SubCommandDescriptor {
 
     protected final Object commandInstance;
 

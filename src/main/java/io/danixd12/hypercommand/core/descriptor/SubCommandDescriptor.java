@@ -22,7 +22,7 @@ import io.danixd12.hypercommand.core.CommandMeta;
 
 import java.lang.reflect.Method;
 
-public class SubCommandDescriptor extends AbstractCommandDescriptor {
+public final class SubCommandDescriptor extends AbstractCommandDescriptor {
 
     public SubCommandDescriptor(CommandMeta meta, Object commandInstance, Method method) {
 
