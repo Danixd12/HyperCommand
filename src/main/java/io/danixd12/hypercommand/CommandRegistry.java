@@ -67,9 +67,9 @@ public final class CommandRegistry {
         CommandDescriptor parentDescriptor = RegistryHelper.findParentCommand(commandClass, commandInstance, parentCommand);
 
         if (parentDescriptor != null)
-            RegistryHelper.addSubCommands(commandClass, commandInstance, parentDescriptor);
+            RegistryHelper.registerSubCommands(commandClass, commandInstance, parentDescriptor);
         else
-            throw new CommandRegistrationException(parentCommand.name());
+            throw new CommandRegistrationException(parentCommand.name(), "Can't find parent command");
 
         return parentDescriptor;
 

@@ -31,7 +31,7 @@ import java.util.List;
 
 public sealed abstract class AbstractCommandDescriptor extends CommandMeta permits CommandDescriptor, SubCommandDescriptor {
 
-    protected final Object commandInstance;
+    private final Object commandInstance;
 
     private final Method method;
 

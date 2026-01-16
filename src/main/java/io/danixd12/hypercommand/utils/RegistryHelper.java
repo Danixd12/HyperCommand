@@ -31,7 +31,7 @@ public final class RegistryHelper {
 
     private RegistryHelper() {}
 
-    public static void addSubCommands(Class<?> commandClass, Object commandInstance, CommandDescriptor parentDescriptor) {
+    public static void registerSubCommands(Class<?> commandClass, Object commandInstance, CommandDescriptor parentDescriptor) {
 
         for (Method method : commandClass.getDeclaredMethods()) {
 

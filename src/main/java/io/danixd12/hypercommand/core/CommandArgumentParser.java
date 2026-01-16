@@ -30,7 +30,7 @@ public record CommandArgumentParser(Object arg, ArgumentType type) {
         return switch (type) {
             case REQUIRED -> ((RequiredArg<?>) arg).get(ctx);
             case OPTIONAL -> ((OptionalArg<?>) arg).get(ctx);
-            case DEFAULT -> ((DefaultArg<?>) arg).get(ctx);
+            case DEFAULT ->  ((DefaultArg<?>) arg).get(ctx);
         };
 
     }

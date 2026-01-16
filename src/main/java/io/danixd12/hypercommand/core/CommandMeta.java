@@ -18,6 +18,8 @@
 
 package io.danixd12.hypercommand.core;
 
+import java.util.Arrays;
+
 public class CommandMeta {
 
     protected final String name;
@@ -64,6 +66,16 @@ public class CommandMeta {
 
     public boolean isConfirmationRequired() {
         return requiresConfirmation;
+    }
+
+    @Override
+    public String toString() {
+        return  "- Command information -" +
+                "\nName: " + name +
+                "\nDescription: " + description +
+                "\nAliases: " + Arrays.toString(aliases) +
+                "\nPermissions: " + perms +
+                "\nRequires confirmation: " + requiresConfirmation;
     }
 
 }
