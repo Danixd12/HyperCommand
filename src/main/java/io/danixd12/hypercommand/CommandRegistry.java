@@ -38,7 +38,7 @@ public final class CommandRegistry {
 
         plugin.getCommandRegistry().registerCommand(commandAdapter);
 
-        plugin.getLogger().at(Level.ALL).log("Registered command -> " + descriptor.getName());
+        plugin.getLogger().at(Level.ALL).log("Registered command -> " + descriptor.getName() + "\n\n" + descriptor);
 
     }
 
@@ -61,7 +61,7 @@ public final class CommandRegistry {
         try {
             commandInstance = commandClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new CommandRegistrationException(parentCommand.name(), e.getCause());
         }
 
         CommandDescriptor parentDescriptor = RegistryHelper.findParentCommand(commandClass, commandInstance, parentCommand);

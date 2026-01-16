@@ -24,4 +24,8 @@ public final class CommandRegistrationException extends RuntimeException {
         super("Couldn't register command: " + cmdName + " -> " + cause);
     }
 
+    public CommandRegistrationException(String cmdName, Throwable cause) {
+        super("Couldn't register command: " + cmdName + " -> " + cause);
+    }
+
 }

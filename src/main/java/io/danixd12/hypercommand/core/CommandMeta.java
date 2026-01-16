@@ -19,8 +19,9 @@
 package io.danixd12.hypercommand.core;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class CommandMeta {
+public class CommandMeta implements Cloneable {
 
     protected final String name;
     protected final String description;
@@ -66,6 +67,22 @@ public class CommandMeta {
 
     public boolean isConfirmationRequired() {
         return requiresConfirmation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CommandMeta that = (CommandMeta) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public CommandMeta clone() {
+        try {
+            return (CommandMeta) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
     @Override
