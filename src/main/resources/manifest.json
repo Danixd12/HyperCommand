@@ -5,7 +5,7 @@
     "Description": "-",
     "Authors": [
         {
-            "Name": "dani33y"
+            "Name": "Danixd12"
         }
     ],
     "ServerVersion": "*",
@@ -16,6 +16,6 @@
         
     },
     "DisabledByDefault": false,
-    "Main": "d.studio.hypercommand.HyperCommand",
+    "Main": "io.github.danixd12.hypercommand.HyperCommand.test",
     "IncludesAssetPack": true
 }
