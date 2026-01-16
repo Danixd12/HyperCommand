@@ -16,7 +16,7 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core;
+package io.danixd12.hypercommand.core;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.DefaultArg;

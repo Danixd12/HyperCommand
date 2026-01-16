@@ -16,19 +16,12 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.types;
+package io.danixd12.hypercommand.exceptions;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public class CommandExecutionException extends RuntimeException {
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Command {
-    String name();
-    String description() default "";
-    String[] aliases() default {""};
-    String permissions() default "";
-    boolean requiresConfirmation() default false;
+    public CommandExecutionException(String cmdName, Throwable cause) {
+        super("Error while executing command: " + cmdName + " -> " + cause);
+    }
+
 }

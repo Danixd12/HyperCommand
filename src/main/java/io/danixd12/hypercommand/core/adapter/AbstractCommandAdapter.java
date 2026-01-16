@@ -16,16 +16,16 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.adapter;
+package io.danixd12.hypercommand.core.adapter;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
-import io.danixd12.hypercommand.command.core.CommandArgumentParser;
-import io.danixd12.hypercommand.command.core.descriptor.AbstractCommandDescriptor;
-import io.danixd12.hypercommand.command.types.Arg;
+import io.danixd12.hypercommand.core.CommandArgumentParser;
+import io.danixd12.hypercommand.core.descriptor.AbstractCommandDescriptor;
+import io.danixd12.hypercommand.types.Arg;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Parameter;
@@ -39,16 +39,16 @@ public abstract class AbstractCommandAdapter extends CommandBase {
 
     public AbstractCommandAdapter(AbstractCommandDescriptor descriptor) {
 
-        super(descriptor.name, descriptor.description, descriptor.requiresConfirmation);
+        super(descriptor.getName(), descriptor.getDescription(), descriptor.isConfirmationRequired());
 
         this.descriptor = descriptor;
 
-        if (descriptor.perms != null && !descriptor.perms.isEmpty()) {
-            this.requirePermission(descriptor.perms);
+        if (descriptor.getPerms() != null && !descriptor.getPerms().isEmpty()) {
+            this.requirePermission(descriptor.getDescription());
         }
 
-        if (descriptor.aliases != null && descriptor.aliases.length > 0) {
-            this.addAliases(descriptor.aliases);
+        if (descriptor.getAliases() != null && descriptor.getAliases().length > 0) {
+            this.addAliases(descriptor.getAliases());
         }
 
         this.registerArguments();

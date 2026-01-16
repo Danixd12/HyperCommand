@@ -16,18 +16,12 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.adapter;
+package io.danixd12.hypercommand.exceptions;
 
-import io.danixd12.hypercommand.command.core.descriptor.CommandDescriptor;
+public class CommandRegistrationException extends RuntimeException {
 
-public class CommandAdapter extends AbstractCommandAdapter {
-
-    public CommandAdapter(CommandDescriptor descriptor) {
-
-        super(descriptor);
-
-        descriptor.getSubcommandList().forEach((_, desc) -> this.addSubCommand(new SubCommandAdapter(desc)));
-
+    public CommandRegistrationException(String cmdName) {
+        super("Couldn't register command: " + cmdName);
     }
 
 }

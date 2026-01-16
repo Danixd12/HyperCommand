@@ -16,16 +16,19 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.adapter;
+package io.danixd12.hypercommand.types;
 
-import io.danixd12.hypercommand.command.core.descriptor.SubCommandDescriptor;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class SubCommandAdapter extends AbstractCommandAdapter {
-
-    public SubCommandAdapter(SubCommandDescriptor descriptor) {
-
-        super(descriptor);
-
-    }
-
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Command {
+    String name();
+    String description() default "";
+    String[] aliases() default {""};
+    String permissions() default "";
+    boolean requiresConfirmation() default false;
 }

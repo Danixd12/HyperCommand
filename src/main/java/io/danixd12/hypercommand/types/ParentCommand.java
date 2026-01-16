@@ -16,7 +16,7 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.types;
+package io.danixd12.hypercommand.types;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

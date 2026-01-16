@@ -16,11 +16,12 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.descriptor;
+package io.danixd12.hypercommand.core.descriptor;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
-import io.danixd12.hypercommand.command.core.CommandArgumentParser;
-import io.danixd12.hypercommand.command.utils.ArgumentConverter;
+import io.danixd12.hypercommand.core.CommandArgumentParser;
+import io.danixd12.hypercommand.exceptions.CommandExecutionException;
+import io.danixd12.hypercommand.utils.ArgumentConverter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -29,55 +30,43 @@ import java.util.List;
 
 public abstract class AbstractCommandDescriptor {
 
-    public final String name;
-    public final String[] aliases;
-    public final String perms;
-    public final String description;
-    public final boolean requiresConfirmation;
+    protected final String name;
+    protected final String description;
+    protected final String[] aliases;
+    protected final String perms;
+    protected final boolean requiresConfirmation;
 
-    private Method method;
+    protected final Object commandInstance;
 
-    public AbstractCommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation) {
+    private final Method method;
+
+    public AbstractCommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation, Object commandInstance, Method method) {
 
         this.name = name;
         this.description = description;
         this.aliases = aliases;
         this.perms = perms;
 
+        this.commandInstance = commandInstance;
+
+        this.method = method;
+        this.method.setAccessible(true);
+
         this.requiresConfirmation = requiresConfirmation;
 
-    }
-
-    public void setMethod(Method method) {
-
-        if (this.method != null) {
-            throw new RuntimeException("Parent command already set!");
-        } else {
-
-            this.method = method;
-
-            if (!this.method.canAccess(method))
-                this.method.setAccessible(true);
-
-        }
-
-    }
-
-    public Method getMethod() {
-        return method;
     }
 
     public final void execute(CommandContext ctx, List<CommandArgumentParser> args) {
 
         try {
 
-            for (Field field : method.getClass().getDeclaredFields()) {
+            for (Field field : commandInstance.getClass().getDeclaredFields()) {
 
                 if (field.getType() != CommandContext.class)
                     continue;
 
                 field.setAccessible(true);
-                field.set(method, ctx);
+                field.set(commandInstance, ctx);
 
                 break;
 
@@ -85,12 +74,36 @@ public abstract class AbstractCommandDescriptor {
 
             Object[] parameters = ArgumentConverter.parseParameters(method, ctx, args);
 
-            method.invoke(method, parameters);
+            method.invoke(commandInstance, parameters);
 
         } catch (InvocationTargetException | IllegalAccessException ex) {
-            throw new RuntimeException(ex);
+            throw new CommandExecutionException(name, ex.getCause());
         }
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String[] getAliases() {
+        return aliases;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public boolean isConfirmationRequired() {
+        return requiresConfirmation;
+    }
+
+    public Method getMethod() {
+        return method;
     }
 
 }

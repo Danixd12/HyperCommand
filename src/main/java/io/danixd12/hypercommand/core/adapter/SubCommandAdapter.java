@@ -16,16 +16,16 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.types;
+package io.danixd12.hypercommand.core.adapter;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import io.danixd12.hypercommand.core.descriptor.SubCommandDescriptor;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
-public @interface Arg {
-    String defaultValue() default ""; // TODO
-    boolean required() default false;
+public class SubCommandAdapter extends AbstractCommandAdapter {
+
+    public SubCommandAdapter(SubCommandDescriptor descriptor) {
+
+        super(descriptor);
+
+    }
+
 }

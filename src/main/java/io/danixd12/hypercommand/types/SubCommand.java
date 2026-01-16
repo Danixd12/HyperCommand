@@ -16,18 +16,19 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.descriptor;
+package io.danixd12.hypercommand.types;
 
-import java.lang.reflect.Method;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class SubCommandDescriptor extends AbstractCommandDescriptor {
-
-    public SubCommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation, Method method) {
-
-        super(name, description, aliases, perms, requiresConfirmation);
-
-        super.setMethod(method);
-
-    }
-
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface SubCommand {
+    String name();
+    String description() default "";
+    String[] aliases() default {""};
+    String permissions() default "";
+    boolean requiresConfirmation() default false;
 }

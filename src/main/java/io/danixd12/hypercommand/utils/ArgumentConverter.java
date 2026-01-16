@@ -16,10 +16,10 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.utils;
+package io.danixd12.hypercommand.utils;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
-import io.danixd12.hypercommand.command.core.CommandArgumentParser;
+import io.danixd12.hypercommand.core.CommandArgumentParser;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

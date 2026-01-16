@@ -16,7 +16,7 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.types;
+package io.danixd12.hypercommand.types;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -24,11 +24,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface SubCommand {
-    String name();
-    String description() default "";
-    String[] aliases() default {""};
-    String permissions() default "";
-    boolean requiresConfirmation() default false;
+@Target(ElementType.PARAMETER)
+public @interface Arg {
+    String defaultValue() default ""; // TODO
+    boolean required() default false;
 }

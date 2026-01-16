@@ -16,26 +16,18 @@
  * *************************************************************************
  */
 
-package io.danixd12.hypercommand.command.core.descriptor;
+package io.danixd12.hypercommand.core.adapter;
 
-import java.util.HashMap;
+import io.danixd12.hypercommand.core.descriptor.CommandDescriptor;
 
-public final class CommandDescriptor extends AbstractCommandDescriptor {
+public class CommandAdapter extends AbstractCommandAdapter {
 
-    private final HashMap<String, SubCommandDescriptor> subcommandList = new HashMap<>();
+    public CommandAdapter(CommandDescriptor descriptor) {
 
-    public CommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation) {
+        super(descriptor);
 
-        super(name, description, aliases, perms, requiresConfirmation);
+        descriptor.getSubcommandList().forEach((_, desc) -> this.addSubCommand(new SubCommandAdapter(desc)));
 
-    }
-
-    public void addSubcommand(String name, SubCommandDescriptor desc) {
-        this.subcommandList.put(name, desc);
-    }
-
-    public HashMap<String, SubCommandDescriptor> getSubcommandList() {
-        return subcommandList;
     }
 
 }
