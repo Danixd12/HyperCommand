@@ -18,13 +18,15 @@
 
 package io.danixd12.hypercommand.core.descriptor;
 
+import io.danixd12.hypercommand.core.CommandMeta;
+
 import java.lang.reflect.Method;
 
 public class SubCommandDescriptor extends AbstractCommandDescriptor {
 
-    public SubCommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation, Object commandInstance, Method method) {
+    public SubCommandDescriptor(CommandMeta meta, Object commandInstance, Method method) {
 
-        super(name, description, aliases, perms, requiresConfirmation, commandInstance, method);
+        super(meta, commandInstance, method);
 
     }
 

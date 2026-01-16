@@ -20,6 +20,7 @@ package io.danixd12.hypercommand.core.descriptor;
 
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import io.danixd12.hypercommand.core.CommandArgumentParser;
+import io.danixd12.hypercommand.core.CommandMeta;
 import io.danixd12.hypercommand.exceptions.CommandExecutionException;
 import io.danixd12.hypercommand.utils.ArgumentConverter;
 
@@ -28,31 +29,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public abstract class AbstractCommandDescriptor {
-
-    protected final String name;
-    protected final String description;
-    protected final String[] aliases;
-    protected final String perms;
-    protected final boolean requiresConfirmation;
+public abstract class AbstractCommandDescriptor extends CommandMeta {
 
     protected final Object commandInstance;
 
     private final Method method;
 
-    public AbstractCommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation, Object commandInstance, Method method) {
+    public AbstractCommandDescriptor(CommandMeta meta, Object commandInstance, Method method) {
 
-        this.name = name;
-        this.description = description;
-        this.aliases = aliases;
-        this.perms = perms;
+        super(meta);
 
         this.commandInstance = commandInstance;
 
         this.method = method;
         this.method.setAccessible(true);
-
-        this.requiresConfirmation = requiresConfirmation;
 
     }
 
@@ -80,26 +70,6 @@ public abstract class AbstractCommandDescriptor {
             throw new CommandExecutionException(name, ex.getCause());
         }
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String[] getAliases() {
-        return aliases;
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public boolean isConfirmationRequired() {
-        return requiresConfirmation;
     }
 
     public Method getMethod() {

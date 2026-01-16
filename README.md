@@ -1,4 +1,4 @@
-# HyperCommand [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PixelStudios-Dev/PixelStudiosCore)
+# HyperCommand [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
 
 A command library for Hytale.
 
@@ -62,7 +62,7 @@ public class TestCommand {
             permissions = "cmd.subtest"
     )
     void hello(@Arg                  String name,
-               @Arg(required = true) int age) {
+               @Arg(required = false) int age) {
 
         ctx.sendMessage(Message.raw(
                 "Hello " + name + ", you are " + age + " years old"
@@ -79,4 +79,4 @@ Thank you for reading.
 
 ## Licencia
 
-This library is brought to you under an Open Source Library, for more info about what you can and can't do, please read [LICENSE](https://github.com/PixelStudios-Dev/PixelStudiosCore/blob/main/LICENSE)
+This library is brought to you under an Open Source Library, for more info about what you can and can't do, please read [LICENSE](https://github.com/Danixd12/HyperCommand/blob/main/LICENSE)

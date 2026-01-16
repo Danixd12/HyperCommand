@@ -22,13 +22,11 @@ import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import io.danixd12.hypercommand.exceptions.CommandRegistrationException;
 import io.danixd12.hypercommand.core.adapter.CommandAdapter;
 import io.danixd12.hypercommand.core.descriptor.CommandDescriptor;
-import io.danixd12.hypercommand.core.descriptor.SubCommandDescriptor;
 import io.danixd12.hypercommand.types.Command;
-import io.danixd12.hypercommand.types.ParentCommand;
-import io.danixd12.hypercommand.types.SubCommand;
+import io.danixd12.hypercommand.utils.RegistryHelper;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.logging.Level;
 
 public class CommandRegistry {
 
@@ -49,67 +47,14 @@ public class CommandRegistry {
             throw new RuntimeException(e);
         }
 
-        CommandDescriptor parentDescriptor = findParentCommand(commandClass, commandInstance, parentCommand);
+        CommandDescriptor parentDescriptor = RegistryHelper.findParentCommand(commandClass, commandInstance, parentCommand);
 
         if (parentDescriptor != null)
-            addSubCommands(commandClass, commandInstance, parentDescriptor);
+            RegistryHelper.addSubCommands(commandClass, commandInstance, parentDescriptor);
         else
             throw new CommandRegistrationException(parentCommand.name());
 
         registerCommandInternal(parentDescriptor);
-
-    }
-
-    private static void addSubCommands(Class<?> commandClass, Object commandInstance, CommandDescriptor parentDescriptor) {
-
-        for (Method method : commandClass.getDeclaredMethods()) {
-
-            if (method.isAnnotationPresent(SubCommand.class)){
-
-                SubCommand subCommand = method.getAnnotation(SubCommand.class);
-
-                parentDescriptor.addSubcommand(
-                        new SubCommandDescriptor(
-                                subCommand.name(),
-                                subCommand.description(),
-                                subCommand.aliases(),
-                                subCommand.permissions(),
-                                subCommand.requiresConfirmation(),
-                                commandInstance,
-                                method
-                        )
-                );
-
-            }
-
-        }
-
-    }
-
-    private static CommandDescriptor findParentCommand(Class<?> commandClass, Object commandInstance, Command command) {
-
-        CommandDescriptor parentDescriptor = null;
-
-        for (Method method : commandClass.getDeclaredMethods()) {
-
-            if (method.isAnnotationPresent(ParentCommand.class)) {
-
-                parentDescriptor = new CommandDescriptor(
-                        command.name(),
-                        command.description(),
-                        command.aliases(), 
-                        command.permissions(),
-                        command.requiresConfirmation(),
-                        commandInstance,
-                        method
-                );
-
-                break;
-
-            }
-        }
-
-        return parentDescriptor;
 
     }
 
@@ -119,7 +64,7 @@ public class CommandRegistry {
 
         base.getCommandRegistry().registerCommand(commandAdapter);
 
-        System.out.println("Registered command -> " + desc.getName());
+        base.getLogger().at(Level.ALL).log("Registered command -> " + desc.getName());
 
     }
 
@@ -129,6 +74,8 @@ public class CommandRegistry {
             throw new RuntimeException("Base plugin already initialized!");
 
         base = plugin;
+
+        base.getLogger().at(Level.ALL).log("HyperCommand library has been successfully initialized.");
 
     }
 

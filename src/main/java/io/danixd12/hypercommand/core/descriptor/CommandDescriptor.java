@@ -18,6 +18,8 @@
 
 package io.danixd12.hypercommand.core.descriptor;
 
+import io.danixd12.hypercommand.core.CommandMeta;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -25,18 +27,18 @@ public final class CommandDescriptor extends AbstractCommandDescriptor {
 
     private final HashMap<String, SubCommandDescriptor> subcommandList = new HashMap<>();
 
-    public CommandDescriptor(String name, String description, String[] aliases, String perms, boolean requiresConfirmation, Object commandInstance, Method method) {
+    public CommandDescriptor(CommandMeta meta, Object commandInstance, Method method) {
 
-        super(name, description, aliases, perms, requiresConfirmation, commandInstance, method);
+        super(meta, commandInstance, method);
 
     }
 
     public void addSubcommand(SubCommandDescriptor desc) {
 
-        if (subcommandList.containsKey(desc.name))
-            throw new IllegalStateException("Duplicated command name for: " + desc.name);
+        if (subcommandList.containsKey(desc.getName()))
+            throw new IllegalStateException("Duplicated command name for: " + desc.getName());
 
-        this.subcommandList.put(desc.name, desc);
+        this.subcommandList.put(desc.getName(), desc);
 
     }
 
